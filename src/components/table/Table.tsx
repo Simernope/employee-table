@@ -14,7 +14,7 @@ const Table = () => {
         setIsEditing,
         isEditing
     } = useContext(GlobalContext)
-    const tableHeadStyles = 'text-sm font-normal'
+    const tableHeadStyles = 'text-sm font-normal sticky top-0 bg-light-gray dark:bg-dark-gray'
 
     const handleData = (row: RowData) => {
         if (row) {
@@ -33,7 +33,7 @@ const Table = () => {
 
     return (
         <div
-            className='overflow-y-scroll h-[327px] border  border-light-gray dark:border-dark-gray text-sm box-content rounded'>
+            className='overflow-y-scroll h-[327px] border  border-light-gray dark:border-dark-gray text-sm box-content rounded relative'>
             <div
                 className=' w-[410px]   p-[5px]  '>
                 <table className="table-fixed">

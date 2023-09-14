@@ -3,9 +3,22 @@ import {useContext} from "react";
 import {RowData} from "../../types/types.ts";
 
 const EditButton = () => {
-    const {editRowFunction, name, age, isEmployed, selectedRow, subscription, setIsEditing, setSelectedRow} = useContext(GlobalContext)
+    const {
+        editRowFunction,
+        name,
+        age,
+        isEmployed,
+        selectedRow,
+        subscription,
+        setIsEditing,
+        setSelectedRow,
+        setName,
+        setAge,
+        setSubscription,
+        setIsEmployed,
+    } = useContext(GlobalContext)
     const handleButton = () => {
-        if (name && age && (isEmployed !== undefined) && subscription && selectedRow && editRowFunction && setIsEditing && setSelectedRow) {
+        if (name && age && (isEmployed !== undefined) && subscription && selectedRow && editRowFunction && setIsEditing) {
             const payload: RowData = {
                 name,
                 age: Number(age),
@@ -14,7 +27,18 @@ const EditButton = () => {
                 id: selectedRow
             }
             editRowFunction(payload)
+            clearFields()
+        }
+    }
+
+     const clearFields = () => {
+        if (setName && setAge && setIsEmployed && setSubscription && setIsEditing && setSelectedRow) {
+            setIsEditing(false)
             setSelectedRow(-1)
+            setName('')
+            setAge('')
+            setIsEmployed(false)
+            setSubscription('Subscribed')
             setIsEditing(false)
         }
     }

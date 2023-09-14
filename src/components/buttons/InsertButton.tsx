@@ -3,17 +3,43 @@ import {RowData} from "../../types/types.ts";
 import {useContext} from "react";
 
 const InsertButton = () => {
-    const {name, age, isEmployed, subscription, insertFunction} = useContext(GlobalContext)
+    const {
+        name,
+        age,
+        isEmployed,
+        subscription,
+        insertFunction,
+        setSelectedRow,
+        setIsEditing,
+        setName,
+        setAge,
+        setSubscription,
+        setIsEmployed,
+    } = useContext(GlobalContext)
+
     const handleButton = () => {
-        if(name && age && (isEmployed !== undefined) && subscription && insertFunction){
+        if (name && age && (isEmployed !== undefined) && subscription && insertFunction) {
             const payload: RowData = {
                 name,
                 age: Number(age),
-                employment: isEmployed? 'Employed' : 'Unemployed',
+                employment: isEmployed ? 'Employed' : 'Unemployed',
                 subscription: subscription,
                 id: new Date().getTime()
             }
-             insertFunction(payload)
+            insertFunction(payload)
+            clearFields()
+        }
+    }
+
+    const clearFields = () => {
+        if (setName && setAge && setIsEmployed && setSubscription && setIsEditing && setSelectedRow) {
+            setSelectedRow(-1)
+            setIsEditing(false)
+            setName('')
+            setAge('')
+            setIsEmployed(false)
+            setSubscription('Subscribed')
+            setIsEditing(false)
         }
     }
 
