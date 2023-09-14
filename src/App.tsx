@@ -1,7 +1,7 @@
 import EditorSection from "./components/dataEditor/EditorSection.tsx";
 import {GlobalContext} from "./components/context/GlobalContext.tsx";
 import {useEffect, useState} from "react";
-import {addRow, deleteRow, getTableRows} from "./localstorage/localStorage.ts";
+import {addRow, deleteRow, editRow, getTableRows} from "./localstorage/localStorage.ts";
 import Table from "./components/table/Table.tsx";
 import {RowData} from "./types/types.ts";
 
@@ -10,10 +10,12 @@ function App() {
     const [name, setName] = useState('')
     const [age, setAge] = useState('')
     const [isEmployed, setIsEmployed] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
     const [subscription, setSubscription] = useState('subscribed')
     const [selectedRow, setSelectedRow] = useState<number | undefined>()
     const insertFunction = addRow
     const deleteFunction = deleteRow
+    const editRowFunction = editRow
 
     const inputStyles = ` w-full
                     border
@@ -39,7 +41,7 @@ function App() {
     const getData = () => {
         getTableRows()
             .then((response) => {
-                    setTableRows(response)
+                setTableRows(response)
             })
     }
 
@@ -69,7 +71,10 @@ function App() {
             deleteFunction,
             selectedRow,
             setSelectedRow,
-            rows: tableRows
+            rows: tableRows,
+            isEditing,
+            setIsEditing,
+            editRowFunction
         }}>
             <div className='min-w-fit  h-screen bg-gray-100 flex justify-center items-center '>
                 <div

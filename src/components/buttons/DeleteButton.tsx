@@ -2,10 +2,12 @@ import {GlobalContext} from "../context/GlobalContext.tsx";
 import {useContext} from "react";
 
 const DeleteButton = () => {
-    const {deleteFunction, selectedRow} = useContext(GlobalContext)
+    const {deleteFunction, selectedRow, setSelectedRow, setIsEditing} = useContext(GlobalContext)
     const handleButton = () => {
-        if (selectedRow && deleteFunction) {
+        if (selectedRow && deleteFunction && selectedRow && setIsEditing && setSelectedRow) {
             deleteFunction(selectedRow)
+            setSelectedRow(-1)
+            setIsEditing(false)
         }
     }
 

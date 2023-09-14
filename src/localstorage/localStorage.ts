@@ -4,6 +4,21 @@ export const setDefaultTableRows = async (rows: Array<RowData>) => {
     await localStorage.setItem('rows', JSON.stringify(rows))
 }
 
+export const editRow = async (row: RowData) => {
+    const editedData = await getTableRows().then(
+        (response) => response.map(item => {
+            if (row.id === item.id) {
+                return row
+            } else {
+                return item
+            }
+
+        }))
+    console.log(editedData)
+    await localStorage.setItem('rows', JSON.stringify(editedData))
+    window.dispatchEvent(new Event('storage'));
+}
+
 export const getTableRows = async (): Promise<Array<RowData> | []> => {
     const rows = await localStorage.getItem('rows')
     if (rows) {
@@ -17,11 +32,11 @@ export const deleteRow = async (id: number) => {
     const filteredData = await getTableRows().then(
         (response) => response.filter(row => row.id !== id))
     console.log(filteredData)
-    if(filteredData){
+    if (filteredData) {
         await localStorage.setItem('rows', JSON.stringify(filteredData))
         window.dispatchEvent(new Event('storage'));
 
-    }else{
+    } else {
         await localStorage.setItem('rows', JSON.stringify(filteredData))
         window.dispatchEvent(new Event('storage'));
 
@@ -35,7 +50,7 @@ export const addRow = async (row: RowData) => {
         const data: Array<RowData> = JSON.parse(rows)
         data.push(row)
         await localStorage.setItem('rows', JSON.stringify(data))
-    }else{
+    } else {
         console.log(row)
         await localStorage.setItem('rows', JSON.stringify([row]))
     }

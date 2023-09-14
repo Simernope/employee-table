@@ -16,6 +16,9 @@ type GlobalContent = {
     selectedRow?: number,
     setSelectedRow?: (rowId: number) => void
     rows?: Array<RowData>
+    isEditing?: boolean
+    setIsEditing?: (value: boolean) => void
+    editRowFunction?: (row: RowData) => void
 }
 
 export const GlobalContext = createContext<GlobalContent>({})

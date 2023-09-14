@@ -1,9 +1,35 @@
 import {GlobalContext} from "../context/GlobalContext.tsx";
 import {useContext} from "react";
+import {RowData} from "../../types/types.ts";
 
 const Table = () => {
-    const {selectedRow, setSelectedRow, rows} = useContext(GlobalContext)
+    const {
+        selectedRow,
+        setSelectedRow,
+        rows,
+        setName,
+        setAge,
+        setSubscription,
+        setIsEmployed,
+        setIsEditing,
+        isEditing
+    } = useContext(GlobalContext)
     const tableHeadStyles = 'text-sm font-normal'
+
+    const handleData = (row: RowData) => {
+        if (row) {
+            if (setSelectedRow) {
+                setSelectedRow(row.id)
+            }
+            if (setName && setAge && setIsEmployed && setSubscription && setIsEditing) {
+                setName(row.name)
+                setAge((row.age).toString())
+                setIsEmployed(row.employment === 'Employed')
+                setSubscription(row.subscription)
+                setIsEditing(!isEditing)
+            }
+        }
+    }
 
     return (
         <div
@@ -21,9 +47,13 @@ const Table = () => {
                     </thead>
                     <tbody className='text-sm'>
                     {
-                        setSelectedRow && rows && rows.map(row => (
+                        setIsEditing && setSelectedRow && rows && rows.map(row => (
                             <tr key={row.id}
-                                onClick={() => setSelectedRow(row.id)}
+                                onClick={() => {
+                                    setIsEditing(false)
+                                    setSelectedRow(row.id)
+                                }}
+                                onDoubleClick={() => handleData(row)}
                                 className={`${selectedRow === row.id && 'bg-green text-white '}`}>
                                 <td className='px-[4px]'>{row.name} </td>
                                 <td>{row.age}</td>
